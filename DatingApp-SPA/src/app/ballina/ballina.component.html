@@ -1,0 +1,22 @@
+<div class="container mt-5">
+  <div *ngIf="!modiRegjistrimit" style="text-align: center">
+    <h1>Gjeje shpirtin tënd binjak</h1>
+    <p class="lead">Futu që tani, kliko në pullën Regjistrohu</p>
+    <div class="text-center">
+      <button class="btn btn-primary btn-lg mr-2" (click)="regjistrimi()">Regjistrohu</button>
+      <button class="btn btn-info btn-lg">Mëso më shumë</button>
+    </div>
+  </div>
+
+  <div *ngIf="modiRegjistrimit" class="container">
+    <div class="row justify-content-center">
+      <div class="col-4">
+        <!-- [vleratNgaBallina]="vlerat" -->
+          <app-regjistrohu  (anuloRegjistrimin)="anuloRegjistriminMode($event)"></app-regjistrohu>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <p *ngFor="let vlera of vlerat">{{vlera.emer}} </p> -->

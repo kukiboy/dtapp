@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DatingApp.API.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController]   
     public class ValuesController : ControllerBase
     {
         private readonly DataContext _context;
@@ -19,6 +21,7 @@ namespace DatingApp.API.Controllers
 
         }
         // GET api/values
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetVlerat() //ActionResult<IEnumerable<string>> Get()
         {
@@ -28,7 +31,7 @@ namespace DatingApp.API.Controllers
            // return new string[] { "value1", "value3" };
         }
 
-        // GET api/values/5
+        [AllowAnonymous]// GET api/values/5        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetVlera(int id) //ActionResult<string> Get(string id)
         {
@@ -38,6 +41,7 @@ namespace DatingApp.API.Controllers
         }
 
         // POST api/values
+        [AllowAnonymous]
         [HttpPost]
         public void Post([FromBody] string value)
         {

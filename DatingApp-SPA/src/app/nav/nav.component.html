@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Takimet</a>
+
+  
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Përputhjet <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Lista</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Mesazhet</a>
+      </li>
+      <li *ngIf="kyqur()" class="nav-item">
+        <a class="nav-link" (click)="qkyqu()">Qkyqu</a>
+      </li>
+    </ul>
+
+    <div *ngIf="kyqur()" class="dropdown">
+      <a class="dropdown-toggle text-light" >
+        Tung Betim!  
+      </a>
+      <div class="dropdown-menu" >
+        <a class="dropdown-item" href="#"> <i class="fa fa-user"></i>  Action</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>
+      </div>
+    </div>
+
+
+    <form *ngIf="!kyqur()" #loginForm="ngForm" class="form-inline mt-2 mt-md-0" (ngSubmit)="kyqu()">
+      <!-- #perdoruesi="ngModel" -->
+      <input class="form-control mr-sm-2" type="text" name="perdoruesi" 
+                placeholder="Perdoruesi" required [(ngModel)]="model.perdoruesi" >
+<!-- #fjalekalimi=ngModel -->
+      <input class="form-control mr-sm-2" type="password" name="fjalekalimi" 
+                placeholder="Fjalekalimi" required [(ngModel)]="model.fjalekalimi">
+      <button [disabled]="!loginForm.valid" class="btn btn-success my-2 my-sm-0" type="submit">Kyqu</button>
+    </form>
+  
+</nav>
+<!-- <pre>
+  Form valid: {{ loginForm.valid }}
+  Form Touched: {{ loginForm.touched }}
+  Form Dirty: {{ loginForm.dirty }}
+  Form Values: {{ loginForm.value | json }}
+  perdoruesi Valid: {{ perdoruesi.valid }}
+  perdoruesi Touched: {{ perdoruesi.touched }}
+  perdoruesi Value: {{ perdoruesi.value }}
+  perdoruesi Dirty: {{ perdoruesi.dirty }}
+  fjalekalimi Valid: {{ fjalekalimi.valid }}
+  fjalekalimi Touched: {{ fjalekalimi.touched }}
+  fjalekalimi Value: {{ fjalekalimi.value }}
+  fjalekalimi Dirty: {{ fjalekalimi.dirty }}
+
+</pre> -->

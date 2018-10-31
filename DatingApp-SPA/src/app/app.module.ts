@@ -1,20 +1,29 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { VleraComponent } from './vlera/vlera.component';
+import { NavComponent } from './nav/nav.component';
+import { AuthService } from './_serviset/auth.service';
+import { BallinaComponent } from './ballina/ballina.component';
+import { RegjistrohuComponent } from './regjistrohu/regjistrohu.component';
 
 @NgModule({
    declarations: [
       AppComponent,
-      VleraComponent
+      NavComponent,
+      BallinaComponent,
+      RegjistrohuComponent
    ],
    imports: [
       BrowserModule,
-      HttpClientModule
+      HttpClientModule,
+      FormsModule
    ],
-   providers: [],
+   providers: [
+      AuthService
+   ],
    bootstrap: [
       AppComponent
    ]
