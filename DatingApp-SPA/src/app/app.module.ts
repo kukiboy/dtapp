@@ -8,6 +8,9 @@ import { NavComponent } from './nav/nav.component';
 import { AuthService } from './_serviset/auth.service';
 import { BallinaComponent } from './ballina/ballina.component';
 import { RegjistrohuComponent } from './regjistrohu/regjistrohu.component';
+import { ErrorInterceptorProvider } from './_serviset/error.interceptor';
+
+
 
 @NgModule({
    declarations: [
@@ -22,10 +25,9 @@ import { RegjistrohuComponent } from './regjistrohu/regjistrohu.component';
       FormsModule
    ],
    providers: [
-      AuthService
+      AuthService,
+      ErrorInterceptorProvider
    ],
-   bootstrap: [
-      AppComponent
-   ]
+   bootstrap: [AppComponent]
 })
 export class AppModule { }

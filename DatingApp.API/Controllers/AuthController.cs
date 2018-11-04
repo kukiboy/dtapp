@@ -46,37 +46,43 @@ namespace DatingApp.API.Controllers
         [HttpPost("kyqu")]
         public async Task<IActionResult> Kyqu(PerdoruesPerTuKyqurDto perdoruesPerTuKyqurDto)
         {
-            var perdoruesNgaRepo = await _repo.Kyqu(perdoruesPerTuKyqurDto.Perdoruesi.ToLower(), perdoruesPerTuKyqurDto.Fjalekalimi);
 
-            if (perdoruesNgaRepo == null)
-                return Unauthorized();
+                // throw new Exception("Sistemi po thot jo!");
+
+                var perdoruesNgaRepo = await _repo.Kyqu(perdoruesPerTuKyqurDto.Perdoruesi.ToLower(), perdoruesPerTuKyqurDto.Fjalekalimi);
+
+                if (perdoruesNgaRepo == null)
+                    return Unauthorized();
 
 
-            var demet = new[]
-            {
-                    new Claim(ClaimTypes.NameIdentifier, perdoruesNgaRepo.Id.ToString()),
-                    new Claim(ClaimTypes.Name, perdoruesNgaRepo.Perdoruesi)
-            };
+                var demet = new[]
+                {
+                        new Claim(ClaimTypes.NameIdentifier, perdoruesNgaRepo.Id.ToString()),
+                        new Claim(ClaimTypes.Name, perdoruesNgaRepo.Perdoruesi)
+                };
 
-            var qelesi = new SymmetricSecurityKey(Encoding.UTF8
-                .GetBytes(_config.GetSection("AppSettings:Token").Value));
+                var qelesi = new SymmetricSecurityKey(Encoding.UTF8
+                    .GetBytes(_config.GetSection("AppSettings:Token").Value));
 
-            var kreds = new SigningCredentials(qelesi, SecurityAlgorithms.HmacSha512Signature);
+                var kreds = new SigningCredentials(qelesi, SecurityAlgorithms.HmacSha512Signature);
 
-            var tokenPershkruesi = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(demet),
-                Expires = DateTime.Now.AddDays(1),
-                SigningCredentials = kreds
-            };
+                var tokenPershkruesi = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(demet),
+                    Expires = DateTime.Now.AddDays(1),
+                    SigningCredentials = kreds
+                };
 
-            var tokenHendler = new JwtSecurityTokenHandler();
+                var tokenHendler = new JwtSecurityTokenHandler();
 
-            var token = tokenHendler.CreateToken(tokenPershkruesi);
+                var token = tokenHendler.CreateToken(tokenPershkruesi);
 
-            return Ok(new {
-                token = tokenHendler.WriteToken(token)
-            });
+                return Ok(new {
+                    token = tokenHendler.WriteToken(token)
+                });
+            
+            
+
         }
 
     }
