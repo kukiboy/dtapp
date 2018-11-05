@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_serviset/auth.service';
+import { AlertifyService } from '../_serviset/alertify.service';
 
 @Component({
   selector: 'app-nav',
@@ -10,28 +11,32 @@ import { AuthService } from '../_serviset/auth.service';
 export class NavComponent implements OnInit {
   model: any = {};
 
-  constructor(private authService: AuthService) {}
+  constructor(public authService: AuthService, private alertify: AlertifyService) {}
 
   ngOnInit() {}
 
   kyqu() {
     // console.log(this.model);
     this.authService.kyqu(this.model).subscribe(next => {
-      console.log('Kyqur me sukses');
+      this.alertify.sukses('Kyqur me sukses');
+      // console.log('Kyqur me sukses');
     }, error => {
-        console.log(error);
+      this.alertify.gabim(error);
+        // console.log(error);
         // 'Kyqja deshtoi'
     });
   }
 
   kyqur() {
-    const token = localStorage.getItem('token');
-    return !!token;
+    // const token = localStorage.getItem('token');
+    // return !!token;
+    return this.authService.iKyqur();
 
   }
 
   qkyqu() {
     localStorage.removeItem('token');
-    console.log('qkyqur me sukses');
+    this.alertify.mesazh('qkyqur me sukses');
+    // console.log('qkyqur me sukses');
   }
 }

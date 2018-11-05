@@ -1,8 +1,9 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Takimet</a>
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand" href="#">Takimet</a>
 
   
-    <ul class="navbar-nav mr-auto">
+    <ul *ngIf="kyqur()" class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="#">Përputhjet <span class="sr-only">(current)</span></a>
       </li>
@@ -12,19 +13,20 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Mesazhet</a>
       </li>
-      <li *ngIf="kyqur()" class="nav-item">
+      <!-- <li *ngIf="kyqur()" class="nav-item">
         <a class="nav-link" (click)="qkyqu()">Qkyqu</a>
-      </li>
+      </li> -->
     </ul>
 
-    <div *ngIf="kyqur()" class="dropdown">
-      <a class="dropdown-toggle text-light" >
-        Tung Betim!  
+    <div *ngIf="kyqur()" class="dropdown" dropdown>
+      <a class="dropdown-toggle text-light" dropdownToggle>
+        Tung {{authService.tokenIDekoduar?.unique_name | titlecase}} !  
       </a>
-      <div class="dropdown-menu" >
-        <a class="dropdown-item" href="#"> <i class="fa fa-user"></i>  Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#">Something else here</a>
+      <div class="dropdown-menu mt-2" *dropdownMenu>
+        <a class="dropdown-item" href="#"><i class="fa fa-user"></i>  Profili im</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" (click)="qkyqu()">
+          <i class="fa fa-sign-out"></i> Qkyqu</a>
       </div>
     </div>
 
@@ -38,6 +40,9 @@
                 placeholder="Fjalekalimi" required [(ngModel)]="model.fjalekalimi">
       <button [disabled]="!loginForm.valid" class="btn btn-success my-2 my-sm-0" type="submit">Kyqu</button>
     </form>
+  </div>
+
+  
   
 </nav>
 <!-- <pre>

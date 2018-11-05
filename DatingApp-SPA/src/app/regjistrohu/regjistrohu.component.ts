@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../_serviset/auth.service';
+import { AlertifyService } from '../_serviset/alertify.service';
 
 @Component({
   selector: 'app-regjistrohu',
@@ -11,23 +12,25 @@ export class RegjistrohuComponent implements OnInit {
   @Output() anuloRegjistrimin = new EventEmitter();
   model: any = {};
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private alertify: AlertifyService) { }
 
   ngOnInit() {
   }
 
   regjistrohu() {
     this.authService.regjistro(this.model).subscribe(() => {
-      console.log('regjistrimi i sukseseshem');
+      this.alertify.sukses('regjistrimi i sukseseshem');
+      // console.log('regjistrimi i sukseseshem');
     }, error => {
-      console.log(error);
+      this.alertify.gabim(error);
+      // console.log(error);
     });
     // console.log(this.model);
   }
 
   anulo() {
     this.anuloRegjistrimin.emit(false);
-    console.log('Anuluar');
+    // console.log('Anuluar');
   }
 
 }
