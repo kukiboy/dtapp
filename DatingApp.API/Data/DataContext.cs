@@ -9,5 +9,6 @@ namespace DatingApp.API.Data
 
         public DbSet <Vlera> Vlerat { get; set; }
         public DbSet<Perdorues> Perdoruesit { get; set; }
+        public DbSet<Foto> Fotot { get; set; }
     }
 }

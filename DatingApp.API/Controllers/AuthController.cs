@@ -47,7 +47,7 @@ namespace DatingApp.API.Controllers
         public async Task<IActionResult> Kyqu(PerdoruesPerTuKyqurDto perdoruesPerTuKyqurDto)
         {
 
-                // throw new Exception("Sistemi po thot jo!");
+                //throw new Exception("Sistemi po thot jo bbbb!");
 
                 var perdoruesNgaRepo = await _repo.Kyqu(perdoruesPerTuKyqurDto.Perdoruesi.ToLower(), perdoruesPerTuKyqurDto.Fjalekalimi);
 

@@ -1,17 +1,17 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-primary">
   <div class="container">
-    <a class="navbar-brand" href="#">Takimet</a>
+    <a class="navbar-brand" [routerLink]="['/ballina']" >Takimet</a>
 
   
     <ul *ngIf="kyqur()" class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Përputhjet <span class="sr-only">(current)</span></a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/antaret']" >Përputhjet <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Lista</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/listat']" >Lista</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Mesazhet</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/mesazhet']" >Mesazhet</a>
       </li>
       <!-- <li *ngIf="kyqur()" class="nav-item">
         <a class="nav-link" (click)="qkyqu()">Qkyqu</a>
