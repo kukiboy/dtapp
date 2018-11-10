@@ -20,7 +20,7 @@ namespace DatingApp.API.Data
             {
                 byte[] fjalekalimHash, fjalekalimKryp;
                 KrijoFjalekalimHash("fjalekalim", out fjalekalimHash, out fjalekalimKryp);
-
+                
                 perdorues.FjalekalimHash = fjalekalimHash;
                 perdorues.FjalekalimKryp = fjalekalimKryp;
                 perdorues.Perdoruesi = perdorues.Perdoruesi.ToLower();
