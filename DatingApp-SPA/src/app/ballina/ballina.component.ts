@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: "app-ballina",
-  templateUrl: "./ballina.component.html",
-  styleUrls: ["./ballina.component.css"]
+  selector: 'app-ballina',
+  templateUrl: './ballina.component.html',
+  styleUrls: ['./ballina.component.css']
 })
 export class BallinaComponent implements OnInit {
   modiRegjistrimit = false;

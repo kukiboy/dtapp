@@ -2,8 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { BsDropdownModule } from 'ngx-bootstrap';
+import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
+import { JwtModule } from '@auth0/angular-jwt';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -13,13 +15,19 @@ import { RegjistrohuComponent } from './regjistrohu/regjistrohu.component';
 import { ErrorInterceptorProvider } from './_serviset/error.interceptor';
 import { AlertifyService } from './_serviset/alertify.service';
 import { AuthGuard } from './_rojet/auth.guard';
-import { ListaAntareveComponent } from './lista-antareve/lista-antareve.component';
+import { ListaAntareveComponent } from './antaret/lista-antareve/lista-antareve.component';
 import { MesazhetComponent } from './mesazhet/mesazhet.component';
 import { ListatComponent } from './listat/listat.component';
 import { appRutet } from './routes';
+import { PerdoruesService } from './_serviset/perdorues.service';
+import { KartelaAntaritComponent } from './antaret/kartela-antarit/kartela-antarit.component';
+import { DetajetAntaritComponent } from './antaret/detajet-antarit/detajet-antarit.component';
+import { DetajetAntaritResolver } from './_zgjedhesit/detajet-antarit.resolver';
+import { ListaAntareveResolver } from './_zgjedhesit/lista-antareve.resolver';
 
-
-
+export function tokenFurnitori() {
+    return localStorage.getItem('token');
+}
 @NgModule({
    declarations: [
       AppComponent,
@@ -28,20 +36,34 @@ import { appRutet } from './routes';
       RegjistrohuComponent,
       ListaAntareveComponent,
       MesazhetComponent,
-      ListatComponent
+      ListatComponent,
+      KartelaAntaritComponent,
+      DetajetAntaritComponent
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       FormsModule,
       BsDropdownModule.forRoot(),
-      RouterModule.forRoot(appRutet)
+      TabsModule.forRoot(),
+      RouterModule.forRoot(appRutet),
+      NgxGalleryModule,
+      JwtModule.forRoot({
+          config: {
+              tokenGetter: tokenFurnitori,
+              whitelistedDomains: ['localhost:5000'],
+              blacklistedRoutes: ['localhost:5000/api/auth']
+          }
+      })
    ],
    providers: [
       AuthService,
       ErrorInterceptorProvider,
       AlertifyService,
-      AuthGuard
+      AuthGuard,
+      PerdoruesService,
+      DetajetAntaritResolver,
+      ListaAntareveResolver
    ],
    bootstrap: [
       AppComponent

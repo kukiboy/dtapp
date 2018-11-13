@@ -1,0 +1,59 @@
+<div class="container mt-4">
+  <div class="row">
+    <h1>Profili: {{perdorues.njohurSi}}</h1>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card">
+        <img class="card-img-top img-thumbnail" src="{{perdorues?.fotoUrl}}" alt="{{perdorues?.njohurSi}}">
+        <div class="card-body">
+          <div>
+            <strong>Lokacioni:</strong>
+            <p>{{perdorues?.qyteti}}, {{perdorues?.shteti}}</p>
+          </div>
+          <div>
+            <strong>Mosha:</strong>
+            <p>{{perdorues?.mosha}}</p>
+          </div>
+          <div>
+            <strong>Aktiv se fundi:</strong>
+            <p>{{perdorues?.seFundiAktiv}}</p>
+          </div>
+          <div>
+            <strong>Antar qe nga:</strong>
+            <p>{{perdorues?.krijuarMe}}</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="btn-group d-flex">
+            <button class="btn btn-primary w-100">Pelqej</button>
+            <button class="btn btn-success w-100">Mesazh</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <div class="tab-panel">
+        <tabset class="antar-tabset">
+          <tab heading="Rreth {{perdorues?.njohurSi}}">
+            <h4>Pershkrimi</h4>
+            <p>{{perdorues?.prezantimi}}</p>
+            <h4>Interesuar Per</h4>
+            <p>{{perdorues?.interesuarPer}}</p>
+          </tab>
+          <tab heading="Intereset">
+            <h4>Intereset</h4>
+            <p>{{perdorues?.intereset}}</p>
+          </tab>
+          <tab heading="Fotot">
+            <!-- <p>Fotot ketu</p> -->
+            <ngx-gallery [options]="galleriOpcionet" [images]="galleriImazhet"></ngx-gallery>
+          </tab>
+          <tab heading="Mesazhet">
+            <p>Mesazhet ketu</p>
+          </tab>
+        </tabset>
+      </div>
+    </div>
+  </div>
+</div>
