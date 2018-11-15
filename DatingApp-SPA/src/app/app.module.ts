@@ -24,6 +24,9 @@ import { KartelaAntaritComponent } from './antaret/kartela-antarit/kartela-antar
 import { DetajetAntaritComponent } from './antaret/detajet-antarit/detajet-antarit.component';
 import { DetajetAntaritResolver } from './_zgjedhesit/detajet-antarit.resolver';
 import { ListaAntareveResolver } from './_zgjedhesit/lista-antareve.resolver';
+import { RedaktoAntarinComponent } from './antaret/redakto-antarin/redakto-antarin.component';
+import { RedaktoAntarResolver } from './_zgjedhesit/redakto-antar.resolver';
+import { ParandaloHumbjeShenimesh } from './_rojet/parandalo-humbje-ndryshimesh.guard';
 
 export function tokenFurnitori() {
     return localStorage.getItem('token');
@@ -38,7 +41,8 @@ export function tokenFurnitori() {
       MesazhetComponent,
       ListatComponent,
       KartelaAntaritComponent,
-      DetajetAntaritComponent
+      DetajetAntaritComponent,
+      RedaktoAntarinComponent
    ],
    imports: [
       BrowserModule,
@@ -63,7 +67,9 @@ export function tokenFurnitori() {
       AuthGuard,
       PerdoruesService,
       DetajetAntaritResolver,
-      ListaAntareveResolver
+      ListaAntareveResolver,
+      RedaktoAntarResolver,
+      ParandaloHumbjeShenimesh
    ],
    bootstrap: [
       AppComponent

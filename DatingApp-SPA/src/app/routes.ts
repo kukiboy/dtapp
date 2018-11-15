@@ -7,6 +7,9 @@ import { AuthGuard } from './_rojet/auth.guard';
 import { DetajetAntaritComponent } from './antaret/detajet-antarit/detajet-antarit.component';
 import { DetajetAntaritResolver } from './_zgjedhesit/detajet-antarit.resolver';
 import { ListaAntareveResolver } from './_zgjedhesit/lista-antareve.resolver';
+import { RedaktoAntarinComponent } from './antaret/redakto-antarin/redakto-antarin.component';
+import { RedaktoAntarResolver } from './_zgjedhesit/redakto-antar.resolver';
+import { ParandaloHumbjeShenimesh } from './_rojet/parandalo-humbje-ndryshimesh.guard';
 
 export const appRutet: Routes = [
     // { path: 'ballina', component: BallinaComponent },
@@ -21,6 +24,9 @@ export const appRutet: Routes = [
                 resolve: { perdoruesit: ListaAntareveResolver } },
                 { path: 'antaret/:id', component: DetajetAntaritComponent,
                     resolve: {perdorues: DetajetAntaritResolver} },
+                { path: 'antar/redakto', component: RedaktoAntarinComponent,
+                    resolve: {perdorues: RedaktoAntarResolver},
+                    canDeactivate: [ParandaloHumbjeShenimesh]},
                 { path: 'mesazhet', component: MesazhetComponent },
                 { path: 'listat', component: ListatComponent },
         ]

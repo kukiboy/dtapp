@@ -39,12 +39,12 @@ namespace DatingApp.API
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(opt => {
                     opt.SerializerSettings.ReferenceLoopHandling = 
-                    Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                        Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
             services.AddCors();
             services.AddAutoMapper();
             services.AddTransient<Seed>();
-            services.AddScoped <IAuthRepository, AuthRepository>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IDepoTakimesh, DepoTakimesh>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(diqka => {

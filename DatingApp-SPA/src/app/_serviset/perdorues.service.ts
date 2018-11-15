@@ -20,11 +20,16 @@ export class PerdoruesService {
 
   constructor(private http: HttpClient) { }
 
-getPerdoruesit(): Observable<Perdorues[]> {
-  return this.http.get<Perdorues[]>(this.bazeUrl + 'perdoruesit'); // , httpOpcionet);
-}
+  getPerdoruesit(): Observable<Perdorues[]> {
+    return this.http.get<Perdorues[]>(this.bazeUrl + 'perdoruesit'); // , httpOpcionet);
+  }
 
-getPerdoruesin(id): Observable<Perdorues> {
-  return this.http.get<Perdorues>(this.bazeUrl + 'perdoruesit/' + id); // , httpOpcionet);
-}
+  getPerdoruesin(id): Observable<Perdorues> {
+    return this.http.get<Perdorues>(this.bazeUrl + 'perdoruesit/' + id); // , httpOpcionet);
+  }
+
+  perditesoPerdorues(id: number, perdorues: Perdorues) {
+    return this.http.put(this.bazeUrl + 'perdoruesit/' + id, perdorues);
+
+  }
 }

@@ -23,7 +23,8 @@
         Tung {{authService.tokenIDekoduar?.unique_name | titlecase}} !  
       </a>
       <div class="dropdown-menu mt-2" *dropdownMenu>
-        <a class="dropdown-item" href="#"><i class="fa fa-user"></i>  Profili im</a>
+        <a class="dropdown-item" [routerLink]="['/antar/redakto']" >
+          <i class="fa fa-user"></i> Redakto Profilin</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" (click)="qkyqu()">
           <i class="fa fa-sign-out"></i> Qkyqu</a>

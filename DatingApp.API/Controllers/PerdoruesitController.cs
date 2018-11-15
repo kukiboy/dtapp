@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using DatingApp.API.Data;
@@ -40,6 +42,21 @@ namespace DatingApp.API.Controllers
             var perdoruesPerReturn = _mapper.Map<PerdoruesDetajuarPerDto>(perdoruesi);
 
             return Ok(perdoruesPerReturn); // perdoruesi);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PerditesoPerdoruesin(int id, PerdoruesPerPerditesimDto perdoruesPerPerditesimDto)
+        {            
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var perdoruesNgaDepo = await _depo.GetPerdoruesin(id);
+            _mapper.Map(perdoruesPerPerditesimDto, perdoruesNgaDepo);
+
+            if (await _depo.RuajGjitha())
+                return NoContent();
+
+            throw new Exception($"Ruajtja per " + this.GetPerdoruesin(id) + " me nr id: {id} deshtoi!");
         }
 
     }

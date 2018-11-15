@@ -1,0 +1,69 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-sm-4">
+      <h1>Profili Yte</h1>
+    </div>
+    <div class="col-sm-8">
+      <div *ngIf="editForm.dirty" class="alert alert-info">
+        <strong>Informate:</strong> Keni bere ndryshime. Ndryshimet qe nuk rruhen do te humben!
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card">
+        <img class="card-img-top img-thumbnail" src="{{perdorues?.fotoUrl}}" alt="{{perdorues?.njohurSi}}">
+        <div class="card-body">
+          <div>
+            <strong>Lokacioni:</strong>
+            <p>{{perdorues?.qyteti}}, {{perdorues?.shteti}}</p>
+          </div>
+          <div>
+            <strong>Mosha:</strong>
+            <p>{{perdorues?.mosha}}</p>
+          </div>
+          <div>
+            <strong>Aktiv se fundi:</strong>
+            <p>{{perdorues?.seFundiAktiv | date : 'dd/MM/yyyy'}}</p>
+          </div>
+          <div>
+            <strong>Antar qe nga:</strong>
+            <p>{{perdorues?.krijuarMe | date : 'dd/MM/yyyy'}}</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button [disabled]="!editForm.dirty" form="editForm" class="btn btn-success btn-block">Ruaj Ndryshimet</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <div class="tab-panel">
+        <tabset class="antar-tabset">
+          <tab heading="Redaktimi i profilit">
+            <form #editForm="ngForm" id="editForm" (ngSubmit)="perditesoPerdoruesin()">
+              <h4>Pershkrimi</h4>
+              <textarea name="prezantimi" rows="6" class="form-control"
+                [(ngModel)]="perdorues.prezantimi"></textarea>
+              <h4>Interesuar për</h4>
+              <textarea name="interesuarPer" rows="6" class="form-control"
+                [(ngModel)]="perdorues.interesuarPer"></textarea>
+              <h4>Intereset</h4>
+              <textarea name="intereset" rows="6" class="form-control"
+                [(ngModel)]="perdorues.intereset"></textarea>
+                <h4>Detajet e Lokacionit:</h4>
+                <div class="form-inline">
+                  <label for="qyteti">Qyteti</label>
+                  <input class="form-control" type="text" name="qyteti" [(ngModel)]="perdorues.qyteti">
+                  <label for="shteti">Shteti</label>
+                  <input class="form-control" type="text" name="shteti" [(ngModel)]="perdorues.shteti">
+                </div>
+            </form>
+          </tab>
+          <tab heading="Redakto Fotot">
+            <p>Radaktimi i fotove do te jete ketu</p>
+          </tab>
+        </tabset>
+      </div>
+    </div>
+  </div>
+</div>

@@ -27,6 +27,7 @@ namespace DatingApp.API.Ndihmesit
                     opt.ResolveUsing(d => d.DataELindjes.KalkuloMoshen());
                 });
             CreateMap<Foto, FototDetajuarPerDto>();
+            CreateMap<PerdoruesPerPerditesimDto, Perdorues>();
         }
     }
 }
