@@ -15,7 +15,7 @@ namespace DatingApp.API.Data
         }
         public async Task<Perdorues> Kyqu(string perdoruesi, string fjalekalim)
         {
-            var perdorues = await _context.Perdoruesit.FirstOrDefaultAsync(x => x.Perdoruesi == perdoruesi);
+            var perdorues = await _context.Perdoruesit.Include(f => f.Fotot).FirstOrDefaultAsync(x => x.Perdoruesi == perdoruesi);
 
             if (perdorues == null)
                 return null;

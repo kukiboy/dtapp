@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 
 export class NavComponent implements OnInit {
   model: any = {};
+  fotoUrl: string;
 
   constructor(
     public authService: AuthService,
@@ -18,10 +19,11 @@ export class NavComponent implements OnInit {
     private ruteri: Router
     ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.aktualFotoUrl.subscribe(fotoUrl => this.fotoUrl = fotoUrl);
+  }
 
   kyqu() {
-    // console.log(this.model);
     this.authService.kyqu(this.model).subscribe(next => {
       this.alertify.sukses('Kyqur me sukses');
       // console.log('Kyqur me sukses');
@@ -35,14 +37,17 @@ export class NavComponent implements OnInit {
   }
 
   kyqur() {
-    // const token = localStorage.getItem('token');
-    // return !!token;
-    return this.authService.iKyqur();
+    const token = localStorage.getItem('token');
+    return !!token;
+    // return this.authService.iKyqur();
 
   }
 
   qkyqu() {
     localStorage.removeItem('token');
+    localStorage.removeItem('perdoruesi');
+    this.authService.tokenIDekoduar = null;
+    this.authService.perdoruesiAktual = null;
     this.alertify.mesazh('qkyqur me sukses');
     this.ruteri.navigate(['/ballina']);
     // console.log('qkyqur me sukses');

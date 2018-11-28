@@ -30,6 +30,13 @@ export class PerdoruesService {
 
   perditesoPerdorues(id: number, perdorues: Perdorues) {
     return this.http.put(this.bazeUrl + 'perdoruesit/' + id, perdorues);
+  }
 
+  cktFotoKryesor(perdoruesId: number, id: number) {
+    return this.http.post(this.bazeUrl + 'perdoruesit/' + perdoruesId + '/fotot/' + id + '/cktKry', {});
+  }
+
+  fshijFoto(perdoruesId: number, id: number) {
+    return this.http.delete(this.bazeUrl + 'perdoruesit/' + perdoruesId + '/fotot/' + id);
   }
 }

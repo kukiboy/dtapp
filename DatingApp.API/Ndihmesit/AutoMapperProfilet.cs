@@ -28,6 +28,8 @@ namespace DatingApp.API.Ndihmesit
                 });
             CreateMap<Foto, FototDetajuarPerDto>();
             CreateMap<PerdoruesPerPerditesimDto, Perdorues>();
+            CreateMap<Foto, FotoPerTeKthyerDto>();
+            CreateMap<FotoPerTeKrijuarDto, Foto>();
         }
     }
 }

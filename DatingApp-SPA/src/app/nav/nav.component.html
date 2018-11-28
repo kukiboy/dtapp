@@ -19,6 +19,9 @@
     </ul>
 
     <div *ngIf="kyqur()" class="dropdown" dropdown>
+      <span class="mr-1">
+        <img src="{{fotoUrl}}">
+      </span>
       <a class="dropdown-toggle text-light" dropdownToggle>
         Tung {{authService.tokenIDekoduar?.unique_name | titlecase}} !  
       </a>

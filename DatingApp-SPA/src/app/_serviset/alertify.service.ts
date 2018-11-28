@@ -8,12 +8,24 @@ export class AlertifyService {
 
 constructor() { }
 
-konfirmim(mesazhi: string, okCallback: () => any) {
-  alertify.konfirmim(mesazhi, function(e) {
-    if (e) {
-      okCallback();
-    } else {}
+konfirmim(titulli: string, mesazhi: string, okCallback: () => any) {
+
+  alertify.confirm(titulli, mesazhi, function () {
+    // alertify.success('Ok');
+    okCallback();
+  }, function () {
+    // alertify.error('Cancel');
   });
+
+
+
+
+  // alertify.confirm(title, mesazhi, function(e) {
+  //   if (e) {
+  //     okCallback();
+  //   } else {
+  //   }
+  // });
 }
 
 sukses(mesazhi: string) {

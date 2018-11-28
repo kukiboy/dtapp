@@ -12,7 +12,7 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="card">
-        <img class="card-img-top img-thumbnail" src="{{perdorues?.fotoUrl}}" alt="{{perdorues?.njohurSi}}">
+        <img class="card-img-top img-thumbnail" src="{{fotoUrl}}" alt="{{perdorues?.njohurSi}}">
         <div class="card-body">
           <div>
             <strong>Lokacioni:</strong>
@@ -52,15 +52,15 @@
                 [(ngModel)]="perdorues.intereset"></textarea>
                 <h4>Detajet e Lokacionit:</h4>
                 <div class="form-inline">
-                  <label for="qyteti">Qyteti</label>
+                  <label for="qyteti">Qyteti&nbsp;</label>
                   <input class="form-control" type="text" name="qyteti" [(ngModel)]="perdorues.qyteti">
-                  <label for="shteti">Shteti</label>
+                  <label for="shteti">&nbsp;Shteti&nbsp;</label>
                   <input class="form-control" type="text" name="shteti" [(ngModel)]="perdorues.shteti">
                 </div>
             </form>
           </tab>
           <tab heading="Redakto Fotot">
-            <p>Radaktimi i fotove do te jete ketu</p>
+            <app-foto-redaktor [fotot]="perdorues.fotot" (getAntarNdryshim)="ndryshoKryFoton($event)"></app-foto-redaktor>
           </tab>
         </tabset>
       </div>

@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/_serviset/auth.service';
 export class RedaktoAntarinComponent implements OnInit {
   @ViewChild('editForm') editForm: NgForm;
   perdorues: Perdorues;
+  fotoUrl: string;
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
     if (this.editForm.dirty) {
@@ -30,18 +31,32 @@ export class RedaktoAntarinComponent implements OnInit {
 
   ngOnInit() {
     this.ruti.data.subscribe(data => {
+      // console.dir(data['perdorues']);
       this.perdorues = data['perdorues'];
     });
+    // this.authServisi.aktualFotoUrl.subscribe(fotoUrl => this.fotoUrl = fotoUrl);
+    this.authServisi.aktualFotoUrl.subscribe(fotoUrl => this.fotoUrl = fotoUrl);
   }
 
   perditesoPerdoruesin() {
     // console.log(this.perdorues);
-    this.perdoruesServisi.perditesoPerdorues(this.authServisi.tokenIDekoduar.nameid, this.perdorues).subscribe(next => {
-      this.alertifaj.sukses('Profili eshte perditesuar me sukses!');
-      this.editForm.reset(this.perdorues);
-    }, error => {
-      this.alertifaj.gabim(error);
-    }
-    );
+    this.perdoruesServisi
+      .perditesoPerdorues(
+        this.authServisi.tokenIDekoduar.nameid,
+        this.perdorues
+      )
+      .subscribe(
+        next => {
+          this.alertifaj.sukses('Profili eshte perditesuar me sukses!');
+          this.editForm.reset(this.perdorues);
+        },
+        error => {
+          this.alertifaj.gabim(error);
+        }
+      );
+  }
+
+  ndryshoKryFoton(fotoUrl) {
+    this.perdorues.fotoUrl = fotoUrl;
   }
 }

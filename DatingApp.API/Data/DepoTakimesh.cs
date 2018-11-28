@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DatingApp.API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,18 @@ namespace DatingApp.API.Data
         public void Fshij<T>(T entity) where T : class
         {
             _context.Remove(entity);
+        }
+
+        public async Task<Foto> GetFoto(int id)
+        {
+            var foto = await _context.Fotot.FirstOrDefaultAsync(f => f.Id == id);
+            return foto;
+        }
+
+        public async Task<Foto> GetFotonKryesoreNgaPerdoruesi(int perdoruesId)
+        {
+            return await _context.Fotot.Where(p => p.PerdoruesId == perdoruesId)
+                .FirstOrDefaultAsync(f => f.aKryesor);
         }
 
         public async Task<Perdorues> GetPerdoruesin(int id)

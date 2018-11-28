@@ -8,12 +8,10 @@ namespace DatingApp.API.Data
     {
          void Shto<T>(T entity) where T: class;
          void Fshij<T>(T entity) where T: class;
-
          Task<bool> RuajGjitha();
-
-         Task<IEnumerable<Perdorues>> GetPerdoruesit();
-         
+         Task<IEnumerable<Perdorues>> GetPerdoruesit();         
          Task<Perdorues> GetPerdoruesin(int id);
-
+         Task<Foto> GetFoto(int id);
+         Task<Foto> GetFotonKryesoreNgaPerdoruesi(int perdoruesId);
     }
 }

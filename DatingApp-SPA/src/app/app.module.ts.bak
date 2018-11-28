@@ -75,6 +75,8 @@ export function tokenFurnitori() {
       RedaktoAntarResolver,
       ParandaloHumbjeShenimesh
    ],
-  bootstrap: [AppComponent]
+   bootstrap: [
+      AppComponent
+   ]
 })
-export class AppModule {}
+export class AppModule { }

@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using DatingApp.API.Data;
 using DatingApp.API.Dtos;
 using DatingApp.API.Models;
@@ -18,8 +19,10 @@ namespace DatingApp.API.Controllers
     {
         private readonly IAuthRepository _repo;
         private readonly IConfiguration _config;
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        private readonly IMapper _mapper;
+        public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper)
         {
+            _mapper = mapper;
             _config = config;
             _repo = repo;
 
@@ -47,41 +50,44 @@ namespace DatingApp.API.Controllers
         public async Task<IActionResult> Kyqu(PerdoruesPerTuKyqurDto perdoruesPerTuKyqurDto)
         {
 
-                //throw new Exception("Sistemi po thot jo bbbb!");
+            //throw new Exception("Sistemi po thot jo bbbb!");
 
-                var perdoruesNgaRepo = await _repo.Kyqu(perdoruesPerTuKyqurDto.Perdoruesi.ToLower(), perdoruesPerTuKyqurDto.Fjalekalimi);
+            var perdoruesNgaRepo = await _repo.Kyqu(perdoruesPerTuKyqurDto.Perdoruesi.ToLower(), perdoruesPerTuKyqurDto.Fjalekalimi);
 
-                if (perdoruesNgaRepo == null)
-                    return Unauthorized();
+            if (perdoruesNgaRepo == null)
+                return Unauthorized();
 
-
-                var demet = new[]
-                {
+            var demet = new[]
+            {
                         new Claim(ClaimTypes.NameIdentifier, perdoruesNgaRepo.Id.ToString()),
                         new Claim(ClaimTypes.Name, perdoruesNgaRepo.Perdoruesi)
                 };
 
-                var qelesi = new SymmetricSecurityKey(Encoding.UTF8
-                    .GetBytes(_config.GetSection("AppSettings:Token").Value));
+            var qelesi = new SymmetricSecurityKey(Encoding.UTF8
+                .GetBytes(_config.GetSection("AppSettings:Token").Value));
 
-                var kreds = new SigningCredentials(qelesi, SecurityAlgorithms.HmacSha512Signature);
+            var kreds = new SigningCredentials(qelesi, SecurityAlgorithms.HmacSha512Signature);
 
-                var tokenPershkruesi = new SecurityTokenDescriptor
+            var tokenPershkruesi = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(demet),
+                Expires = DateTime.Now.AddDays(1),
+                SigningCredentials = kreds
+            };
+
+            var tokenHendler = new JwtSecurityTokenHandler();
+
+            var token = tokenHendler.CreateToken(tokenPershkruesi);
+            
+            var perdoruesi = _mapper.Map<PerdoruesListPerDto>(perdoruesNgaRepo);
+
+                return Ok(new
                 {
-                    Subject = new ClaimsIdentity(demet),
-                    Expires = DateTime.Now.AddDays(1),
-                    SigningCredentials = kreds
-                };
-
-                var tokenHendler = new JwtSecurityTokenHandler();
-
-                var token = tokenHendler.CreateToken(tokenPershkruesi);
-
-                return Ok(new {
-                    token = tokenHendler.WriteToken(token)
+                    token = tokenHendler.WriteToken(token),
+                    perdoruesi
                 });
-            
-            
+
+
 
         }
 

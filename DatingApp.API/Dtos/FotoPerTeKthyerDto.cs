@@ -1,8 +1,8 @@
 using System;
 
-namespace DatingApp.API.Models
+namespace DatingApp.API.Dtos
 {
-    public class Foto
+    public class FotoPerTeKthyerDto
     {
         public int Id { get; set; }
         public string Url { get; set; }
@@ -10,8 +10,5 @@ namespace DatingApp.API.Models
         public DateTime DataEShtimit { get; set; }
         public bool aKryesor { get; set; }
         public string PublikId { get; set; }
-        public Perdorues Perdorues { get; set; }
-        public int PerdoruesId { get; set; }
-
     }
 }
