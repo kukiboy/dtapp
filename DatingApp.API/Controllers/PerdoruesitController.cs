@@ -34,7 +34,7 @@ namespace DatingApp.API.Controllers
             return Ok(perdoruesitPerReturn); // perdoruesit);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetPerdorues")]
         public async Task<IActionResult> GetPerdoruesin(int id)
         {
             var perdoruesi = await _depo.GetPerdoruesin(id);

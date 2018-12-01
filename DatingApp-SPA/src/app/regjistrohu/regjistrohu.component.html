@@ -1,9 +1,84 @@
-<form #formaRegjistrimit="ngForm" (ngSubmit)="regjistrohu()">
+<form [formGroup]="formaRegjistrimit" (ngSubmit)="regjistrohu()">
   <h2 class="text-center text-primary">Futu brenda</h2>
   <hr>
 
   <div class="form-group">
-    <input type="text" class="form-control" required name="perdoruesi" [(ngModel)]="model.perdoruesi" placeholder="Perdoruesi">
+    <label class="control-label" style="margin-right:10px">Gjinia: </label>
+    <label class="radio-inline">
+      <input class="mr-3" type="radio" value="mashkull" formControlName="gjinia">M
+    </label>
+    <label class="radio-inline ml-3">
+      <input class="mr-3" type="radio" value="femer" formControlName="gjinia">F
+    </label>
+  </div>
+  <div class="form-group">
+    <input type="text" 
+    [ngClass]="{'is-invalid': formaRegjistrimit.get('perdoruesi').errors
+    && formaRegjistrimit.get('perdoruesi').touched}"
+    class="form-control" formControlName="perdoruesi" placeholder="Perdoruesi">
+    <div class="invalid-feedback">Ju lutem shkruajeni nje perdorues</div>
+  </div>
+  <div class="form-group">
+    <input [ngClass]="{'is-invalid': formaRegjistrimit.get('njohurSi').errors && formaRegjistrimit.get('njohurSi').touched}" class="form-control"
+      placeholder="Njohur Si" formControlName="njohurSi">
+    <div class="invalid-feedback" *ngIf="formaRegjistrimit.get('njohurSi').touched && formaRegjistrimit.get('njohurSi').hasError('required')">Fusha Njohur Si kerkohet</div>
+  </div>
+  <div class="form-group">
+    <input [ngClass]="{'is-invalid': formaRegjistrimit.get('dataELindjes').errors && formaRegjistrimit.get('dataELindjes').touched}"
+      class="form-control" placeholder="Datelindja" formControlName="dataELindjes" type="text" bsDatepicker [bsConfig]="bsConfig">
+    <div class="invalid-feedback" *ngIf="formaRegjistrimit.get('dataELindjes').touched && formaRegjistrimit.get('dataELindjes').hasError('required')">Datelindja kekohet</div>
+  </div>
+  <div class="form-group">
+    <input [ngClass]="{'is-invalid': formaRegjistrimit.get('qyteti').errors && formaRegjistrimit.get('qyteti').touched}" class="form-control"
+      placeholder="Qyteti" formControlName="qyteti">
+    <div class="invalid-feedback" *ngIf="formaRegjistrimit.get('qyteti').touched && formaRegjistrimit.get('qyteti').hasError('required')">Qyteti
+      is required</div>
+  </div>
+  
+  <div class="form-group">
+    <input [ngClass]="{'is-invalid': formaRegjistrimit.get('shteti').errors && formaRegjistrimit.get('shteti').touched}" class="form-control"
+      placeholder="Shteti" formControlName="shteti">
+    <div class="invalid-feedback" *ngIf="formaRegjistrimit.get('shteti').touched && formaRegjistrimit.get('shteti').hasError('required')">Shteti
+      is required</div>
+  </div>
+
+  <div class="form-group">
+    <input type="password"
+    [ngClass]="{'is-invalid': formaRegjistrimit.get('fjalekalimi').errors
+    && formaRegjistrimit.get('fjalekalimi').touched}"
+    class="form-control" formControlName="fjalekalimi" placeholder="Fjlekalimi">
+    <div class="invalid-feedback"
+      *ngIf="formaRegjistrimit.get('fjalekalimi').hasError('required')
+        && formaRegjistrimit.get('fjalekalimi').touched">
+        Ju lutem shkruajeni fjalekalimin
+    </div>
+    <div class="invalid-feedback"
+      *ngIf="formaRegjistrimit.get('fjalekalimi').hasError('minlength')
+        && formaRegjistrimit.get('fjalekalimi').touched">
+        Fjalekalimi duhet te kete me shume se 3 karaktere
+    </div>
+    <div class="invalid-feedback"
+      *ngIf="formaRegjistrimit.get('fjalekalimi').hasError('maxlength')
+        && formaRegjistrimit.get('fjalekalimi').touched">
+        Fjalekalimi duhet te kete me pake se 9 karaktere
+    </div>
+  </div>
+  <div class="form-group">
+    <input type="password"
+      [ngClass]="{'is-invalid': formaRegjistrimit.get('konfirmoFjalekalimin').errors
+      && formaRegjistrimit.get('konfirmoFjalekalimin').touched
+      || formaRegjistrimit.get('konfirmoFjalekalimin').touched
+      && formaRegjistrimit.hasError('mosperputhje')}"
+      
+    class="form-control" formControlName="konfirmoFjalekalimin" placeholder="Konfirmo Fjalekalimin">
+        <div class="invalid-feedback" *ngIf="formaRegjistrimit.get('konfirmoFjalekalimin').hasError('required')
+                && formaRegjistrimit.get('konfirmoFjalekalimin').touched">
+          Ju lutem shkruajeni fjalekalimin
+        </div>
+        <div class="invalid-feedback" *ngIf="formaRegjistrimit.hasError('mosperputhje')
+                && formaRegjistrimit.get('konfirmoFjalekalimin').touched">
+          Fjalekalimi duhet te perputhet
+        </div>
   </div>
 
   <!-- <div class="form-group">
@@ -12,15 +87,12 @@
       <option *ngFor="let vlera of vleratNgaBallina" [value]="vlera">{{vlera.emer}}</option>
     </select>
   </div> -->
-
-
-  <div class="form-group">
-    <input type="password" class="form-control" required name="fjalekalimi" [(ngModel)]="model.fjalekalimi" placeholder="Fjlekalimi">
-  </div>
-
   <div class="form-group text-center">
-    <button class="btn btn-success" type="submit">Futu</button>
+    <button class="btn btn-success" [disabled]="!formaRegjistrimit.valid" type="submit">Futu</button>
     <button class="btn btn-default" type="button" (click)="anulo()">Anulo</button>
   </div>
 
 </form>
+
+<!-- <p>Form value: {{formaRegjistrimit.value | json}}</p>
+<p>Form status: {{formaRegjistrimit.status | json}}</p> -->

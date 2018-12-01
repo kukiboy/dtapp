@@ -36,14 +36,18 @@ namespace DatingApp.API.Controllers
             if (await _repo.PerdoruesEkziston(perdoruesPerTeKrijuarDto.Perdoruesi))
                 return BadRequest("Perdoruesi ekziston");
 
-            var perdoruesPerTeKrijuar = new Perdorues
-            {
-                Perdoruesi = perdoruesPerTeKrijuarDto.Perdoruesi
-            };
+            // var perdoruesPerTeKrijuar =  new Perdorues
+            // {
+            //     Perdoruesi = perdoruesPerTeKrijuarDto.Perdoruesi
+            // };
+
+            var perdoruesPerTeKrijuar = _mapper.Map<Perdorues>(perdoruesPerTeKrijuarDto);
 
             var krijuarPerdoruesi = await _repo.Regjistro(perdoruesPerTeKrijuar, perdoruesPerTeKrijuarDto.Fjalekalimi);
 
-            return StatusCode(201);
+            var perdoruesPerReturn = _mapper.Map<PerdoruesDetajuarPerDto>(krijuarPerdoruesi);
+
+            return CreatedAtRoute("GetPerdorues", new {Controller = "Perdoruesit", id = krijuarPerdoruesi.Id}, perdoruesPerReturn);
         }
 
         [HttpPost("kyqu")]

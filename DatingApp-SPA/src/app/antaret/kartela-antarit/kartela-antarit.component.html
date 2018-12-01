@@ -1,6 +1,6 @@
 <div class="card mb-4">
   <div class="kartele-img-paluesi">
-    <img class="card-img-top" src="{{perdorues.fotoUrl}}" alt="Fotografija e {{perdorues.njohurSi}}">
+    <img class="card-img-top" src="{{perdorues.fotoUrl || '../../../assets/perdorues.png'}}" alt="Fotografija e {{perdorues.njohurSi}}">
     <ul class="list-inline antar-ikonat animoi text-center">
       <li class="list-inline-item"><button class="btn btn-primary" 
         [routerLink]="['/antaret/',perdorues.id]"><i class="fa fa-user"></i></button></li>

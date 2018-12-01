@@ -11,11 +11,11 @@ constructor() { }
 konfirmim(titulli: string, mesazhi: string, okCallback: () => any) {
 
   alertify.confirm(titulli, mesazhi, function () {
-    // alertify.success('Ok');
+    // alertify.success('Ke klikuar Po');
     okCallback();
   }, function () {
-    // alertify.error('Cancel');
-  });
+    // alertify.error('Ke klikuar Jo');
+    }).set('labels', { ok: 'Po', cancel: 'Jo' });
 
 
 

@@ -55,6 +55,11 @@ export class FotoRedaktorComponent implements OnInit {
           aKryesor: res.aKryesor
         };
         this.fotot.push(foto);
+        if (foto.aKryesor) {
+          this.authServisi.ndryshoFotoAntarit(foto.url);
+          this.authServisi.perdoruesiAktual.fotoUrl = foto.url;
+          localStorage.setItem('perdoruesi', JSON.stringify(this.authServisi.perdoruesiAktual));
+        }
       }
     };
   }
@@ -74,9 +79,8 @@ export class FotoRedaktorComponent implements OnInit {
     });
   }
 
-  fshijFoto(id: number)
-  {
-    this.alertifaj.konfirmim('Konfirmim!', 'A je i sigurt qe po don me e fshi kete foto?', () => {
+  fshijFoto(id: number) {
+    this.alertifaj.konfirmim('KUJDES: Konfirmim!', 'A je i sigurt qe po don me e fshi kete foto?', () => {
       this.perdoruesServisi.fshijFoto(this.authServisi.tokenIDekoduar.nameid, id).subscribe(() => {
         this.fotot.splice(this.fotot.findIndex(f => f.id === id), 1);
         this.alertifaj.sukses('Fotoja eshte fshire me suksese');

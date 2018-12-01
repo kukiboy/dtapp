@@ -27,23 +27,19 @@ kyqu(model: any) {
   return this.http.post(this.baseUrl + 'kyqu', model).pipe(
     map((response: any) => {
       const perdoruesi = response;
-      // console.dir(response);
       if (perdoruesi) {
         localStorage.setItem('token', perdoruesi.token);
-        // console.dir(perdoruesi);
-        // console.dir(perdoruesi.perdoruesi);
         localStorage.setItem('perdoruesi', JSON.stringify(perdoruesi.perdoruesi));
         this.tokenIDekoduar = this.jwtHelpper.decodeToken(perdoruesi.token);
         this.perdoruesiAktual = perdoruesi.perdoruesi;
         this.ndryshoFotoAntarit(this.perdoruesiAktual.fotoUrl);
-        // console.log(this.tokenIDekoduar);
       }
     })
   );
 }
 
-regjistro(model: any) {
-  return this.http.post(this.baseUrl + 'Regjistro', model);
+regjistro(perdoruesi: Perdorues) {
+  return this.http.post(this.baseUrl + 'Regjistro', perdoruesi);
 }
 
 iKyqur() {

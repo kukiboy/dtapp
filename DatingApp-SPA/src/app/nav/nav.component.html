@@ -20,7 +20,7 @@
 
     <div *ngIf="kyqur()" class="dropdown" dropdown>
       <span class="mr-1">
-        <img src="{{fotoUrl}}">
+        <img src="{{fotoUrl || '../../assets/perdorues.png'}}">
       </span>
       <a class="dropdown-toggle text-light" dropdownToggle>
         Tung {{authService.tokenIDekoduar?.unique_name | titlecase}} !  
@@ -46,7 +46,6 @@
     </form>
   </div>
 
-  
   
 </nav>
 <!-- <pre>

@@ -90,7 +90,8 @@ namespace DatingApp.API
 
             // app.UseHttpsRedirection();
             // seeder.SeedPerdoruesit();
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseCors(x => x.WithOrigins("http://localhost:4200")
+                .AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             app.UseAuthentication();
             app.UseMvc();
         }
