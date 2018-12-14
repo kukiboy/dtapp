@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DatingApp.API.Models;
+using DatingApp.API.Ndihmesit;
 
 namespace DatingApp.API.Data
 {
@@ -9,7 +10,7 @@ namespace DatingApp.API.Data
          void Shto<T>(T entity) where T: class;
          void Fshij<T>(T entity) where T: class;
          Task<bool> RuajGjitha();
-         Task<IEnumerable<Perdorues>> GetPerdoruesit();         
+         Task<ListaFaqosur<Perdorues>> GetPerdoruesit(PerdoruesParametrat perdoruesParametrat);         
          Task<Perdorues> GetPerdoruesin(int id);
          Task<Foto> GetFoto(int id);
          Task<Foto> GetFotonKryesoreNgaPerdoruesi(int perdoruesId);

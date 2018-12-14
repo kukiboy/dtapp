@@ -27,11 +27,25 @@ namespace DatingApp.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPerdoruesit()
+        public async Task<IActionResult> GetPerdoruesit([FromQuery]PerdoruesParametrat perdoruesParametrat)
         {
-            var perdoruesit = await _depo.GetPerdoruesit();
+            var perdoruesIdAktual = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var perdoruesNgaDepo = await _depo.GetPerdoruesin(perdoruesIdAktual);
+
+            perdoruesParametrat.PerdoruesId = perdoruesIdAktual;
+
+            if (string.IsNullOrEmpty(perdoruesParametrat.Gjinia))
+            {
+                perdoruesParametrat.Gjinia = perdoruesNgaDepo.Gjinia == "mashkull" ? "femer" : "mashkull";
+            }
+
+            var perdoruesit = await _depo.GetPerdoruesit(perdoruesParametrat);
 
             var perdoruesitPerReturn = _mapper.Map<IEnumerable<PerdoruesListPerDto>>(perdoruesit);
+
+            Response.ShtoFaqosje(perdoruesit.FaqjaAktuale, perdoruesit.MadhesiaFaqes,
+                perdoruesit.SasiaTotal, perdoruesit.TotalFaqe);
             
             return Ok(perdoruesitPerReturn); // perdoruesit);
         }

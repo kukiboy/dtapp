@@ -8,17 +8,22 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ListaAntareveResolver implements Resolve<Perdorues[]> {
-    constructor(private perdoruesService: PerdoruesService,
-        private ruteri: Router,
-        private alertifaj: AlertifyService) {}
+  faqjaNr = 1;
+  madhesiaFaqes = 5;
 
-    resolve(ruti: ActivatedRouteSnapshot): Observable<Perdorues[]> {
-        return this.perdoruesService.getPerdoruesit().pipe(
-            catchError(error => {
-                this.alertifaj.gabim('Problem gjate leximit te te dhenave');
-                this.ruteri.navigate(['/ballina']);
-                return of(null);
-            })
-        );
-    }
+  constructor(
+    private perdoruesService: PerdoruesService,
+    private ruteri: Router,
+    private alertifaj: AlertifyService
+  ) {}
+
+  resolve(ruti: ActivatedRouteSnapshot): Observable<Perdorues[]> {
+    return this.perdoruesService.getPerdoruesit(this.faqjaNr, this.madhesiaFaqes).pipe(
+      catchError(error => {
+        this.alertifaj.gabim('Problem gjate leximit te te dhenave');
+        this.ruteri.navigate(['/ballina']);
+        return of(null);
+      })
+    );
+  }
 }

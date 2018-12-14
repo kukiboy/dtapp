@@ -1,7 +1,58 @@
-<div class="container mt-5">
+<div class="text-center mt-3">
+  <h2>{{faqosja.totalArtikuj}} kandidate jane gjetur</h2>
+</div>
+
+<div class="container mt-3">
+  
+    <form class="form-inline" #form="ngForm" (ngSubmit)="ngarkoPerdoruesit()" novalidate>
+      <div class="form-group">
+        <label for="minMosha">Nga mosha</label>
+        <input type="number" class="form-control ml-1" style="width: 70px" id="minMosha" name="minMosha" 
+        [(ngModel)]="perdoruesParametrat.minMosha" name="minMosha"
+        >
+      </div>
+    
+      <div class="form-group px-2">
+        <label for="maksMosha">Deri</label>
+        <input type="number" class="form-control ml-1" style="width: 70px" id="maksMosha" name="maksMosha"
+        [(ngModel)]="perdoruesParametrat.maksMosha" name="maksMosha">
+      </div>
+      <div class="form-group px-2">
+        <label for="gjinia">Shfaq: </label>
+        <select class="form-control ml-1" style="width: 130px" id="gjinia"
+        [(ngModel)]="perdoruesParametrat.gjinia" name="gjinia">        
+          <option *ngFor="let g of listaGjinive" [value]="g.value">
+            {{g.display}}
+          </option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary" style="margin-left:10px">Filto</button>
+      <button type="button" class="btn btn-info" (click)="resetoFiltrat()" style="margin-left:10px">Rifillo</button>
+            <div class="col">
+              <div class="btn-group float-right">
+                <button type="button" name="radhitSipas" class="btn btn-primary"
+                [(ngModel)]="perdoruesParametrat.radhitSipas" (click)="ngarkoPerdoruesit()" btnRadio="seFundiAktiv">Se Fundi Aktiv</button>
+                <button type="button" name="radhitSipas" class="btn btn-primary"
+                [(ngModel)]="perdoruesParametrat.radhitSipas" (click)="ngarkoPerdoruesit()" btnRadio="krijuarMe">Te Rinje</button>
+              </div>
+            </div>
+
+    </form>
+    <br>
+
   <div class="row">
     <div *ngFor="let perdorues of perdoruesit" class="col-lg2 col-md-2 col-sm-6">
      <app-kartela-antarit [perdorues]="perdorues"></app-kartela-antarit>
     </div>
   </div>
+</div>
+<div class="d-flex justify-content-center">
+  <pagination [boundaryLinks]="true"
+    [totalItems]="faqosja.totalArtikuj"
+    [(ngModel)]="faqosja.faqjaAktuale"
+    [itemsPerPage]="faqosja.artikujPerFaqe"
+    (pageChanged)="pageChanged($event)"
+    previousText="&lsaquo;" nextText="&rsaquo;"
+    firstText="&laquo;" lastText="&raquo;">
+  </pagination>
 </div>

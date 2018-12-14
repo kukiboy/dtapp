@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DatingApp.API.Models;
+using DatingApp.API.Ndihmesit;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.API.Data
@@ -34,13 +36,41 @@ namespace DatingApp.API.Data
         public async Task<Perdorues> GetPerdoruesin(int id)
         {
             var perdoruesi = await _context.Perdoruesit.Include(f => f.Fotot).FirstOrDefaultAsync(p => p.Id == id);
+
+
+
             return perdoruesi;
         }
 
-        public async Task<IEnumerable<Perdorues>> GetPerdoruesit()
+        public async Task<ListaFaqosur<Perdorues>> GetPerdoruesit(PerdoruesParametrat perdoruesParametrat)
         {
-            var perdoruesit = await _context.Perdoruesit.Include(f => f.Fotot).ToListAsync();
-            return perdoruesit;
+            var perdoruesit = _context.Perdoruesit.Include(f => f.Fotot).OrderByDescending(p => p.SeFundiAktiv).AsQueryable();
+
+            perdoruesit = perdoruesit.Where(p => p.Id != perdoruesParametrat.PerdoruesId);
+            perdoruesit = perdoruesit.Where(p => p.Gjinia == perdoruesParametrat.Gjinia);
+
+            if (perdoruesParametrat.MaksMosha != 18 || perdoruesParametrat.MaksMosha != 99)
+            {
+                var minDtLnd = DateTime.Today.AddYears(-perdoruesParametrat.MaksMosha - 1);
+                var maksDtLnd = DateTime.Today.AddYears(-perdoruesParametrat.MinMosha);
+
+                perdoruesit = perdoruesit.Where(p => p.DataELindjes >= minDtLnd && p.DataELindjes <= maksDtLnd);
+            }
+
+            if (!string.IsNullOrEmpty(perdoruesParametrat.RadhitSipas))
+            {
+                switch (perdoruesParametrat.RadhitSipas)
+                {                    
+                    case "krijuarMe":
+                            perdoruesit = perdoruesit.OrderByDescending(p => p.KrijuarMe);
+                            break;
+                        default:
+                            perdoruesit = perdoruesit.OrderByDescending(p => p.SeFundiAktiv);
+                            break;
+                }
+            }
+
+            return await ListaFaqosur<Perdorues>.KrijoAsync(perdoruesit, perdoruesParametrat.FaqjaNr, perdoruesParametrat.MadhesiaFaqes);
         }
 
         public async Task<bool> RuajGjitha()
