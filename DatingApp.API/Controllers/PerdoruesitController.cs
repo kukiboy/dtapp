@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DatingApp.API.Data;
 using DatingApp.API.Dtos;
+using DatingApp.API.Models;
 using DatingApp.API.Ndihmesit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,6 @@ namespace DatingApp.API.Controllers
         {
             _mapper = mapper;
             _depo = depo;
-
         }
 
         [HttpGet]
@@ -73,6 +73,34 @@ namespace DatingApp.API.Controllers
                 return NoContent();
 
             throw new Exception($"Ruajtja per " + this.GetPerdoruesin(id) + " me nr id: {id} deshtoi!");
+        }
+
+        [HttpPost("{id}/pelqe/{marresId}")]
+        public async Task<IActionResult> PelqePerdoruesin(int id, int marresId)
+        {
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var pelqe = await _depo.MerrPelqim(id, marresId);
+
+            if (pelqe != null)
+                return BadRequest("Ju e keni perlqyer me pare kete person");
+
+            if (await _depo.GetPerdoruesin(marresId) == null)
+                return NotFound();
+
+            pelqe = new Pelqim
+            {
+                PelqyesId = id,
+                PelqyerId = marresId
+            };
+
+            _depo.Shto<Pelqim>(pelqe);
+
+            if (await _depo.RuajGjitha())
+                return  Ok();
+
+            return BadRequest("Pelqimi i personit deshtoj");
         }
 
     }

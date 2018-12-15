@@ -37,8 +37,6 @@ namespace DatingApp.API.Data
         {
             var perdoruesi = await _context.Perdoruesit.Include(f => f.Fotot).FirstOrDefaultAsync(p => p.Id == id);
 
-
-
             return perdoruesi;
         }
 
@@ -48,6 +46,21 @@ namespace DatingApp.API.Data
 
             perdoruesit = perdoruesit.Where(p => p.Id != perdoruesParametrat.PerdoruesId);
             perdoruesit = perdoruesit.Where(p => p.Gjinia == perdoruesParametrat.Gjinia);
+
+            if (perdoruesParametrat.Pelqyesit)
+            {
+                var perdoruesPelqyesit = await GetPelqimetPerdoruesit(perdoruesParametrat.PerdoruesId, perdoruesParametrat.Pelqyesit);
+                perdoruesit = perdoruesit.Where(p => perdoruesPelqyesit.Contains(p.Id));
+            }
+
+            if (perdoruesParametrat.Pelqyerit)
+            {
+                var perdoruesPelqyerit = await GetPelqimetPerdoruesit(perdoruesParametrat.PerdoruesId, perdoruesParametrat.Pelqyesit);
+                perdoruesit = perdoruesit.Where(p => perdoruesPelqyerit.Contains(p.Id));
+
+            }
+
+
 
             if (perdoruesParametrat.MaksMosha != 18 || perdoruesParametrat.MaksMosha != 99)
             {
@@ -71,6 +84,33 @@ namespace DatingApp.API.Data
             }
 
             return await ListaFaqosur<Perdorues>.KrijoAsync(perdoruesit, perdoruesParametrat.FaqjaNr, perdoruesParametrat.MadhesiaFaqes);
+        }
+
+        private async Task<IEnumerable<int>> GetPelqimetPerdoruesit(int id, bool pelqyesit)
+        {
+            var perdoruesi = await _context.Perdoruesit
+                .Include(x => x.Pelqyesit)
+                .Include(x => x.Pelqyerit)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (pelqyesit)
+            {
+                return perdoruesi.Pelqyesit
+                .Where(p => p.PelqyerId == id)
+                .Select(i => i.PelqyesId);
+            }
+            else
+            {
+                return perdoruesi.Pelqyerit
+                .Where(p => p.PelqyesId == id)
+                .Select(i => i.PelqyerId);
+            }
+        }
+
+        public async Task<Pelqim> MerrPelqim(int perdoruesId, int marresId)
+        {
+            return await _context.Pelqimet.FirstOrDefaultAsync(p =>
+                p.PelqyesId == perdoruesId && p.PelqyerId == marresId);
         }
 
         public async Task<bool> RuajGjitha()

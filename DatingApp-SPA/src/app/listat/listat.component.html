@@ -1,3 +1,32 @@
-<p>
-  listat works!
-</p>
+<div class="text-center mt-3">
+  <h2>{{pelqimetParameter === 'Pelqyesit' ? 'Ata qe me pelqyen ' : 'Ata qe i kam pelqyer '}} : {{faqosja.totalArtikuj}}</h2>
+</div>
+
+<div class="container mt-3">
+
+  <div class="row">
+    <div class="btn-group">
+      <button class="btn btn-primary" [(ngModel)]="pelqimetParameter" btnRadio="Pelqyesit" (click)="ngarkoPerdoruesit()">Ata qe me pelqyen</button>
+      <button class="btn btn-primary" [(ngModel)]="pelqimetParameter" btnRadio="Pelqyerit" (click)="ngarkoPerdoruesit()">Ata qe i kam pelqyer</button>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div *ngFor="let perdoruesi of perdoruesit" class="col-sm-6 col-md-4 col-lg-4 col-xl-2">
+      <app-kartela-antarit [perdorues]="perdoruesi"></app-kartela-antarit>
+    </div>
+  </div>
+
+
+
+</div>
+
+<div class="d-flex justify-content-center">
+  <pagination [boundaryLinks]="true" [totalItems]="faqosja.totalArtikuj" [itemsPerPage]="faqosja.artikujPerFaqe"
+    [(ngModel)]="faqosja.faqjaAktuale" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"
+    firstText="&laquo;" lastText="&raquo;">
+
+  </pagination>
+</div>

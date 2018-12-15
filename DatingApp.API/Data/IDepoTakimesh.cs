@@ -14,5 +14,6 @@ namespace DatingApp.API.Data
          Task<Perdorues> GetPerdoruesin(int id);
          Task<Foto> GetFoto(int id);
          Task<Foto> GetFotonKryesoreNgaPerdoruesi(int perdoruesId);
+         Task<Pelqim> MerrPelqim(int perdoruesId, int marresId);
     }
 }

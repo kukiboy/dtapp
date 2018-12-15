@@ -22,7 +22,7 @@ export class PerdoruesService {
 
   constructor(private http: HttpClient) {}
 
-  getPerdoruesit(faqja?, artikujPerFaqe?, perdoruesParametrat?): Observable<RezultatiFaqosur<Perdorues[]>> {
+  getPerdoruesit(faqja?, artikujPerFaqe?, perdoruesParametrat?, pelqimetParameter?): Observable<RezultatiFaqosur<Perdorues[]>> {
     const rezultatiFaqosur: RezultatiFaqosur<Perdorues[]> = new RezultatiFaqosur<Perdorues[]>();
 
     let params = new HttpParams();
@@ -37,6 +37,14 @@ export class PerdoruesService {
       params = params.append('maksMosha', perdoruesParametrat.maksMosha);
       params = params.append('gjinia', perdoruesParametrat.gjinia);
       params = params.append('radhitSipas', perdoruesParametrat.radhitSipas);
+    }
+
+    if (pelqimetParameter === 'Pelqyesit') {
+      params = params.append('pelqyesit', 'true');
+    }
+
+    if (pelqimetParameter === 'Pelqyerit') {
+      params = params.append('pelqyerit', 'true');
     }
 
     return this.http.get<Perdorues[]>(this.bazeUrl + 'perdoruesit', { observe: 'response', params})
@@ -69,5 +77,9 @@ export class PerdoruesService {
     return this.http.delete(
       this.bazeUrl + 'perdoruesit/' + perdoruesId + '/fotot/' + id
     );
+  }
+
+  dergoPelqim(id: number, marresId: number) {
+    return this.http.post(this.bazeUrl + 'perdoruesit/' + id + '/pelqe/' + marresId, {});
   }
 }

@@ -16,6 +16,8 @@ namespace DatingApp.API.Ndihmesit
         public int MinMosha { get; set; } = 18;
         public int MaksMosha { get; set; } = 99;
         public string RadhitSipas { get; set; }
+        public bool Pelqyerit { get; set; } = false;
+        public bool Pelqyesit { get; set; } = false;
         
     }
 }

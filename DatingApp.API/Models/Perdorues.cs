@@ -21,8 +21,8 @@ namespace DatingApp.API.Models
         public string Qyteti { get; set; }
         public string Shteti { get; set; }
         public ICollection<Foto> Fotot { get; set; }
-
-
+        public ICollection<Pelqim> Pelqyesit { get; set; }
+        public ICollection<Pelqim> Pelqyerit { get; set; }
 
     }
 }

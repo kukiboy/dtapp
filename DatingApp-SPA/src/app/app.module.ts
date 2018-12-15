@@ -30,6 +30,7 @@ import { RedaktoAntarinComponent } from './antaret/redakto-antarin/redakto-antar
 import { RedaktoAntarResolver } from './_zgjedhesit/redakto-antar.resolver';
 import { ParandaloHumbjeShenimesh } from './_rojet/parandalo-humbje-ndryshimesh.guard';
 import { FotoRedaktorComponent } from './antaret/foto-redaktor/foto-redaktor.component';
+import { ListatResolver } from './_zgjedhesit/listat.resolver';
 
 export function tokenFurnitori() {
     return localStorage.getItem('token');
@@ -79,7 +80,8 @@ export function tokenFurnitori() {
       DetajetAntaritResolver,
       ListaAntareveResolver,
       RedaktoAntarResolver,
-      ParandaloHumbjeShenimesh
+      ParandaloHumbjeShenimesh,
+      ListatResolver
    ],
   bootstrap: [AppComponent]
 })
