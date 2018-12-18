@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Perdorues } from '../_modelet/perdorues';
 import { RezultatiFaqosur } from '../_modelet/faqosja';
 import { map } from 'rxjs/operators';
+import { Mesazh } from '../_modelet/mesazh';
 
 // eshte komentuar per shkak se tani nuk ka nevoj pas implementimit
 // te tokenFurnitori dhe JwtModule tek app.module.ts
@@ -53,7 +54,6 @@ export class PerdoruesService {
       rezultatiFaqosur.rezultati = response.body;
       if (response.headers.get('Pagination') != null) {
         rezultatiFaqosur.faqosja = JSON.parse(response.headers.get('Pagination'));
-        // console.log(rezultatiFaqosur);
       }
       return rezultatiFaqosur;
       })
@@ -81,5 +81,47 @@ export class PerdoruesService {
 
   dergoPelqim(id: number, marresId: number) {
     return this.http.post(this.bazeUrl + 'perdoruesit/' + id + '/pelqe/' + marresId, {});
+  }
+
+  merriMesazhet(id: number, faqja?, artikujPerFaqe?, mesazhKonteiner?) {
+    const rezultatiFaqosur: RezultatiFaqosur<Mesazh[]> = new RezultatiFaqosur<Mesazh[]>();
+
+    let params = new HttpParams();
+
+    params = params.append('MesazhKonteiner', mesazhKonteiner);
+
+    if (faqja != null && artikujPerFaqe != null) {
+      params = params.append('faqjaNr', faqja);
+      params = params.append('madhesiaFaqes', artikujPerFaqe);
+    }
+
+    return this.http.get<Mesazh[]>(this.bazeUrl + 'perdoruesit/' + id + '/mesazhet', {observe: 'response', params})
+      .pipe(
+        map(response => {
+        rezultatiFaqosur.rezultati = response.body;
+        if (response.headers.get('Pagination') !== null) {
+          rezultatiFaqosur.faqosja = JSON.parse(response.headers.get('Pagination'));
+        }
+
+        return rezultatiFaqosur;
+        })
+      );
+  }
+
+  merrMesazhSekuence(id: number, marresId: number) {
+    return this.http.get<Mesazh[]>(this.bazeUrl + 'perdoruesit/' + id + '/mesazhet/sekuence/' + marresId);
+  }
+
+  dergoMesazh(id: number, mesazh: Mesazh) {
+    return this.http.post(this.bazeUrl + 'perdoruesit/' + id + '/mesazhet', mesazh);
+  }
+
+  fshijMesazh(id: number, perdoruesId: number) {
+   return this.http.post(this.bazeUrl + 'perdoruesit/' + perdoruesId + '/mesazhet/' + id, {});
+  }
+
+  markoSiTeLexuar(perdoruesId: number, mesazhId: number) {
+    this.http.post(this.bazeUrl + 'perdoruesit/' + perdoruesId + '/mesazhet/' + mesazhId + '/lexuar', {})
+    .subscribe();
   }
 }

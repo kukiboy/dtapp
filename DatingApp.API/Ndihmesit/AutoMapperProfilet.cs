@@ -31,6 +31,11 @@ namespace DatingApp.API.Ndihmesit
             CreateMap<Foto, FotoPerTeKthyerDto>();
             CreateMap<FotoPerTeKrijuarDto, Foto>();
             CreateMap<PerdoruesPerTeKrijuarDto, Perdorues>();
+            CreateMap<MesazhPerTeKrijuarDto, Mesazh>().ReverseMap();
+            CreateMap<Mesazh, MesazhPerReturnDto>()
+                .ForMember(a => a.DerguesFotoUrl, opt => opt.MapFrom(p => p.Dergues.Fotot.FirstOrDefault(f => f.aKryesor).Url))
+                .ForMember(a => a.MarresFotoUrl, opt => opt.MapFrom(p => p.Marres.Fotot.FirstOrDefault(f => f.aKryesor).Url));
+            
         }
     }
 }

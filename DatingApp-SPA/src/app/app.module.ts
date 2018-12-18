@@ -31,6 +31,8 @@ import { RedaktoAntarResolver } from './_zgjedhesit/redakto-antar.resolver';
 import { ParandaloHumbjeShenimesh } from './_rojet/parandalo-humbje-ndryshimesh.guard';
 import { FotoRedaktorComponent } from './antaret/foto-redaktor/foto-redaktor.component';
 import { ListatResolver } from './_zgjedhesit/listat.resolver';
+import { MesazhetResolver } from './_zgjedhesit/mesazhet.resolver';
+import { MesazhetAntaritComponent } from './antaret/mesazhet-antarit/mesazhet-antarit.component';
 
 export function tokenFurnitori() {
     return localStorage.getItem('token');
@@ -48,7 +50,8 @@ export function tokenFurnitori() {
       DetajetAntaritComponent,
       RedaktoAntarinComponent,
       FotoRedaktorComponent,
-      TimeAgoPipe
+      TimeAgoPipe,
+      MesazhetAntaritComponent
    ],
    imports: [
       BrowserModule,
@@ -81,7 +84,8 @@ export function tokenFurnitori() {
       ListaAntareveResolver,
       RedaktoAntarResolver,
       ParandaloHumbjeShenimesh,
-      ListatResolver
+      ListatResolver,
+      MesazhetResolver
    ],
   bootstrap: [AppComponent]
 })

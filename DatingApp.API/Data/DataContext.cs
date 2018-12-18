@@ -11,6 +11,7 @@ namespace DatingApp.API.Data
         public DbSet<Perdorues> Perdoruesit { get; set; }
         public DbSet<Foto> Fotot { get; set; }
         public DbSet<Pelqim> Pelqimet { get; set; }
+        public DbSet<Mesazh> Mesazhet { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -29,6 +30,15 @@ namespace DatingApp.API.Data
                 .HasForeignKey(p => p.PelqyesId)
                 .OnDelete(DeleteBehavior.Restrict);
             
+            builder.Entity<Mesazh>()
+                .HasOne(p => p.Dergues)
+                .WithMany(m => m.MesazhetDerguara)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Mesazh>()
+                .HasOne(p => p.Marres)
+                .WithMany(m => m.MesazhetPranuara)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

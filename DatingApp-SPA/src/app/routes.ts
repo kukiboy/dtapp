@@ -11,6 +11,7 @@ import { RedaktoAntarinComponent } from './antaret/redakto-antarin/redakto-antar
 import { RedaktoAntarResolver } from './_zgjedhesit/redakto-antar.resolver';
 import { ParandaloHumbjeShenimesh } from './_rojet/parandalo-humbje-ndryshimesh.guard';
 import { ListatResolver } from './_zgjedhesit/listat.resolver';
+import { MesazhetResolver } from './_zgjedhesit/mesazhet.resolver';
 
 export const appRutet: Routes = [
     // { path: 'ballina', component: BallinaComponent },
@@ -28,7 +29,7 @@ export const appRutet: Routes = [
                 { path: 'antar/redakto', component: RedaktoAntarinComponent,
                     resolve: {perdorues: RedaktoAntarResolver},
                     canDeactivate: [ParandaloHumbjeShenimesh]},
-                { path: 'mesazhet', component: MesazhetComponent },
+                { path: 'mesazhet', component: MesazhetComponent, resolve: {mesazhet: MesazhetResolver}},
             { path: 'listat', component: ListatComponent, resolve: {perdoruesit: ListatResolver}},
         ]
     },

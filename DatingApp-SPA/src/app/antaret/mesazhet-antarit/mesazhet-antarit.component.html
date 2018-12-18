@@ -1,0 +1,61 @@
+<div class="card">
+  <div class="card-body">
+    <div *ngIf="mesazhet?.length === 0">
+      <p>Akoma nuk ka mesazhe.....Thuaj tungjatjeta duke perdorur kutine me poshte</p>
+    </div>
+
+    <ul class="bisede">
+      <li *ngFor="let mesazh of mesazhet">
+        <!-- per ata -->
+        <div *ngIf="mesazh.derguesId == marresId">
+          <span class="bisede-img float-left">
+            <img src="{{mesazh.derguesFotoUrl}}" alt="{{mesazh.derguesNjohurSi}}" class="rounded-circle">
+          </span>
+          <div class="bisede-body">
+            <div class="header">
+              <strong class="primary-font">{{mesazh.derguesNjohurSi}}</strong>
+              <small class="text-muted float-right">
+                <span class="fa fa-clock-o">{{mesazh.mesazhiDerguarMe | timeAgo}}</span>
+              </small>
+            </div>
+            <p>{{mesazh.permbajtja}}</p>
+          </div>
+        </div>
+
+        <!-- per mua -->
+        <div *ngIf="mesazh.derguesId != marresId">
+          <span class="bisede-img float-right">
+            <img src="{{mesazh.derguesFotoUrl}}" alt="{{mesazh.derguesNjohurSi}}" class="rounded-circle">
+          </span>
+          <div class="bisede-body">
+            <div class="header">
+              <small class="text-muted">
+                <span class="fa fa-clock-o">{{mesazh.mesazhiDerguarMe | timeAgo}}</span>
+                <span *ngIf="!mesazh.eLexuar" class="text-danger">(palexuar)</span>
+                <span *ngIf="mesazh.eLexuar" class="text-success">(Lexuar {{mesazh.dataLeximit | timeAgo}})</span>
+              </small>
+              <strong class="primary-font float-right">{{mesazh.derguesNjohurSi}}</strong>
+            </div>
+            <p>{{mesazh.permbajtja}}</p>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+  <div class="card-footer">
+    <form #formaMesazhit="ngForm" (ngSubmit)="formaMesazhit.valid && dergoMesazh()">
+      <div class="input-group">
+        <input type="text"
+        [(ngModel)]="mesazhIRi.permbajtja"
+        name="permbajtja"
+        required
+         class="form-control input-sm"
+         placeholder="dergo nje mesazh privat">
+        <div class="input-group-append">
+          <button class="btn btn-primary" [disabled]="!formaMesazhit.valid">Dergo</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

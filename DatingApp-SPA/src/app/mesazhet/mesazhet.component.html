@@ -1,3 +1,60 @@
-<p>
-  mesazhet works!
-</p>
+<div class="container mt-5">
+  <div class="row">
+    <div class="btn-group">
+      <button class="btn btn-primary" [(ngModel)]="mesazhKonteiner" btnRadio="Palexuar" (click)="ngarkoMesazhet()">
+        <i class="fa fa-envelope"></i> Palexuar
+      </button>
+      <button class="btn btn-primary" [(ngModel)]="mesazhKonteiner" btnRadio="NeKuti" (click)="ngarkoMesazhet()">
+        <i class="fa fa-envelope-open"></i> NeKuti
+      </button>
+      <button class="btn btn-primary" [(ngModel)]="mesazhKonteiner" btnRadio="JashKutise" (click)="ngarkoMesazhet()">
+        <i class="fa fa-paper-plane"></i> JashtKutise
+      </button>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="mesazhet.length == 0">
+    <h3>Ska mesazhe</h3>
+  </div>
+
+  <div class="row" *ngIf="mesazhet.length > 0">
+    <table class="table table-hover" style="cursor: pointer">
+      <tr>
+        <th style="width: 40%">Mesazh</th>
+        <th style="width: 20%">Nga / Tek</th>
+        <th style="width: 20%">Derguar / Pranuar</th>
+        <th style="width: 20%"></th>
+      </tr>
+      <tr *ngFor="let mesazh of mesazhet" [routerLink]="['/antaret', 
+          mesazhKonteiner == 'JashKutise' ? mesazh.marresId : mesazh.derguesId]"
+           [queryParams]="{tab: 3}">
+        <td>{{mesazh.permbajtja}}</td>
+        <td>
+          <div *ngIf="mesazhKonteiner != 'JashtKutise'">
+            <img src={{mesazh?.derguesFotoUrl}} class="img-circle rounded-circle mr-1">
+            <strong>{{mesazh.derguesNjohurSi}}</strong>
+          </div>
+          <div *ngIf="mesazhKonteiner == 'JashtKutise'">
+            <img src={{mesazh?.marresFotoUrl}} class="img-circle rounded-circle mr-1">
+            <strong>{{mesazh.marresNjohurSi}}</strong>
+          </div>
+        </td>
+        <td>{{mesazh.mesazhiDerguarMe | timeAgo}}</td>
+        <td>
+          <button class="btn btn-danger" (click)="$event.stopPropagation()"  (click)="fshijMesazh(mesazh.id)">Fshij</button>
+        </td>
+      </tr>
+    </table>
+
+  </div>
+
+</div>
+
+<div class="d-flex justify-content-center">
+  <pagination [boundaryLinks]="true"
+              [totalItems]="faqosja.totalArtikuj"
+              [itemsPerPage]="faqosja.artikujPerFaqe"
+    [(ngModel)]="faqosja.faqjaAktuale" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"
+    firstText="&laquo;" lastText="&raquo;">
+  </pagination>
+</div>

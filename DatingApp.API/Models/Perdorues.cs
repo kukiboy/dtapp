@@ -23,6 +23,8 @@ namespace DatingApp.API.Models
         public ICollection<Foto> Fotot { get; set; }
         public ICollection<Pelqim> Pelqyesit { get; set; }
         public ICollection<Pelqim> Pelqyerit { get; set; }
+        public ICollection<Mesazh> MesazhetDerguara { get; set; }
+        public ICollection<Mesazh> MesazhetPranuara { get; set; }
 
     }
 }

@@ -27,14 +27,14 @@
         <div class="card-footer">
           <div class="btn-group d-flex">
             <button class="btn btn-primary w-100">Pelqej</button>
-            <button class="btn btn-success w-100">Mesazh</button>
+            <button class="btn btn-success w-100"(click)="zgjedhTab(3)" >Mesazh</button>
           </div>
         </div>
       </div>
     </div>
     <div class="col-sm-8">
       <div class="tab-panel">
-        <tabset class="antar-tabset">
+        <tabset class="antar-tabset" #antarTabs>
           <tab heading="Rreth {{perdorues?.njohurSi}}">
             <h4>Pershkrimi</h4>
             <p>{{perdorues?.prezantimi}}</p>
@@ -50,7 +50,7 @@
             <ngx-gallery [options]="galleriOpcionet" [images]="galleriImazhet"></ngx-gallery>
           </tab>
           <tab heading="Mesazhet">
-            <p>Mesazhet ketu</p>
+            <app-mesazhet-antarit [marresId]="perdorues.id"></app-mesazhet-antarit>
           </tab>
         </tabset>
       </div>

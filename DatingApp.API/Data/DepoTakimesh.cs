@@ -122,5 +122,54 @@ namespace DatingApp.API.Data
         {
             _context.Add(entity);
         }
+
+        public async Task<Mesazh> MerrMesazh(int id)
+        {
+            return await _context.Mesazhet.FirstOrDefaultAsync(m => m.Id == id);
+        }
+
+        public async Task<ListaFaqosur<Mesazh>> MerrMesazhePerPerdoruesin(MesazhParametrat mesazhParametrat)
+        {
+            var mesazhet = _context.Mesazhet
+            .Include(p => p.Dergues).ThenInclude(f => f.Fotot)
+            .Include(p => p.Marres).ThenInclude(f => f.Fotot)
+            .AsQueryable();
+
+            switch (mesazhParametrat.MesazhKonteiner)
+            {
+                case "NeKuti":
+                    mesazhet = mesazhet.Where(p => p.MarresId == mesazhParametrat.PerdoruesId
+                        && p.MarresiKaFshierMszh == false);
+                    break;
+                    case "JashtKutise":
+                    mesazhet = mesazhet.Where(p => p.DerguesId == mesazhParametrat.PerdoruesId
+                        && p.DerguesiKaFshierMszh == false);
+                    break;
+                    default:
+                    mesazhet = mesazhet.Where(p => p.DerguesId == mesazhParametrat.PerdoruesId
+                        && p.MarresiKaFshierMszh == false && p.ELexuar == false);
+                    break;                
+            }
+
+            mesazhet = mesazhet.OrderByDescending(d => d.MesazhiDerguarMe);
+            return await ListaFaqosur<Mesazh>.KrijoAsync(mesazhet, mesazhParametrat.FaqjaNr, mesazhParametrat.MadhesiaFaqes);
+        }
+
+        public async Task<IEnumerable<Mesazh>> MerrSekuencaMesazhesh(int perdoruesId, int marresId)
+        {
+            var mesazhet = await _context.Mesazhet
+                .Include(p => p.Dergues).ThenInclude(f => f.Fotot)
+                .Include(p => p.Marres).ThenInclude(f => f.Fotot)
+                .Where(m => m.MarresId == perdoruesId && m.MarresiKaFshierMszh == false
+                    && m.DerguesId == marresId
+                         || m.MarresId == marresId && m.DerguesId == perdoruesId
+                         && m.DerguesiKaFshierMszh == false)
+                         .OrderByDescending(m => m.MesazhiDerguarMe)
+                         .ToListAsync();
+
+            return mesazhet;
+
+            
+        }
     }
 }

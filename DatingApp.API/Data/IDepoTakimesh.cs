@@ -15,5 +15,8 @@ namespace DatingApp.API.Data
          Task<Foto> GetFoto(int id);
          Task<Foto> GetFotonKryesoreNgaPerdoruesi(int perdoruesId);
          Task<Pelqim> MerrPelqim(int perdoruesId, int marresId);
+         Task<Mesazh> MerrMesazh(int id);
+         Task<ListaFaqosur<Mesazh>> MerrMesazhePerPerdoruesin(MesazhParametrat mesazhParametrat);
+         Task<IEnumerable<Mesazh>> MerrSekuencaMesazhesh(int perdoruesId, int marresId);
     }
 }
